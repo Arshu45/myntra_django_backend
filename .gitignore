@@ -1,0 +1,77 @@
+# ---- added by assistant: common Python/Django ignores ----
+# Virtual environment
+env/
+venv/
+ENV/
+.venv/
+*/env/
+*/venv/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+# If you collectstatic into a folder named 'static' (common)
+static/
+
+# Environment / config
+.env
+.env.*.local
+.env.local
+.venv
+pip-selfcheck.json
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Windows Python launcher
+python.exe
+pythonw.exe
+
+# PyCharm/JetBrains
+.idea/
+*.iml
+*.iws
+
+# VS Code settings
+.vscode/
+
+# Unit test / coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+.pytest_cache/
+
+# Pipenv / Poetry
+Pipfile.lock
+poetry.lock
+
+# Logs
+*.log
+
+# ---- end added content ----
