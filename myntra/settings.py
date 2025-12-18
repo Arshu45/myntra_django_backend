@@ -1,5 +1,6 @@
 from datetime import timedelta
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,12 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%m7#4xf(-xb1er*3fz0yg$*5-i=k_f)(6+#v0pz1!@u9eq06-g'
+SECRET_KEY = config('SECRET_KEY', default='testing123456')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -144,4 +145,56 @@ SIMPLE_JWT = {
 # JWT Cookies settings
 JWT_COOKIE_SECURE = False  # Set to True in production when using HTTPS
 JWT_COOKIE_NAME = 'refresh_token'
+
+# SESSION_COOKIE_DOMAIN = '.yourdomain.com'
+
+# For Development
+if DEBUG:
+    SESSION_COOKIE_DOMAIN = None
+
+# Cache settings
+CACHE = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://localhost:6379/0',
+        'TIMEOUT': 300,  # 5 minutes default cache timeout
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'SOCKET_CONNECT_TIMEOUT': 5,  # seconds
+            'SOCKET_TIMEOUT': 5,  # seconds
+            'IGNORE_EXCEPTIONS': True,
+        }
+    }
+}
+
+
+# Fallback to in-memory cache if Redis is unavailable
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+
+EMAIL_VERIFICATION_TIMEOUT = 3600*24*3  # 3 days in seconds
+MOBILE_VERIFICATION_REDIRECT_URL = True # Enable Mobile app verification
+
+REQUIRE_EMAIL_VERIFICATION = True  # Require email verification for new users
+
+APP_NAME = "Myntra"
+
+
+# EMAIL SETTINGS
+
+# GMAIL SMTP SETTINGS
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = 'Myntra <noreply@myntra.com>'
+CONTACT_EMAIL = 'support@mytra.com'
 
